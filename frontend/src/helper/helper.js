@@ -4,18 +4,17 @@ axios.defaults.baseURL = "http://localhost:3000";
 
 export async function authenticate(email) {
   try {
-    return await axios.post("/api/authenticate", { email });
+    return await axios.post("/api/auth/authenticate", { email });
   } catch (error) {
-    return { error: "Username not found" };
+    return { error: "User not found" };
   }
 }
 
 export async function verifyPassword({ email, password }) {
   try {
-    const response = await axios.post("/api/login", { email, password });
+    const response = await axios.post("/api/auth/login", { email, password });
     const { data } = response;
 
-   
     console.log("Response data:", data);
 
     if (data.data && data.data.token) {
@@ -33,7 +32,7 @@ export async function verifyPassword({ email, password }) {
 
 export async function registerUser(credential) {
   try {
-    const { data, status } = await axios.post("/api/signup", credential);
+    const { data, status } = await axios.post("/api/auth/signup", credential);
 
     if (status === 201) {
       return Promise.resolve(data.msg);

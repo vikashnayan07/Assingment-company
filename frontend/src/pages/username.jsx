@@ -3,8 +3,9 @@ import styles from "../styles/Username.module.css";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import { emailValidate } from "../helper/validate";
-import useAuthStore from "../store/store";
+
 import { authenticate } from "../helper/helper";
+import useAuthStore from "../store/centerStore";
 
 export default function Username() {
   const navigate = useNavigate();

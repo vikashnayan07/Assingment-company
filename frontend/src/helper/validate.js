@@ -6,6 +6,7 @@ export async function emailValidate(values) {
   if (values.email) {
     try {
       const response = await authenticate(values.email);
+      console.log(response);
       if (response.status !== 200) {
         errors.exist = toast.error("User not found..");
       }

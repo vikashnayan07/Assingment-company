@@ -55,7 +55,7 @@ const SearchPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/lists/save", // Update this URL to match your backend server
+        "http://localhost:3000/api/lists/save",
         {
           name: listName,
           responseCodes: images.map((img) => img.code),

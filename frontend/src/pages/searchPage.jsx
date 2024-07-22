@@ -72,6 +72,9 @@ const SearchPage = () => {
       toast.error("Failed to save list");
     }
   };
+  const handleShowList = () => {
+    navigate("/lists");
+  };
 
   return (
     <div className="container mx-auto">
@@ -94,9 +97,14 @@ const SearchPage = () => {
               onChange={(e) => setListName(e.target.value)}
               className={styles.input}
             />
-            <button className={styles.btn} onClick={handleSaveList}>
-              Save List
-            </button>
+            <div className="flex g-4 justify-between">
+              <button className={styles.btn} onClick={handleSaveList}>
+                Save List
+              </button>
+              <button className={styles.btn} onClick={handleShowList}>
+                List Without Save
+              </button>
+            </div>
             <div className={styles.imageGrid}>
               {images.length > 0 ? (
                 images.map((img, index) => (

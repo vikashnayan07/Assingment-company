@@ -17,7 +17,7 @@ const generateJWTToken = (user) => {
   return token;
 };
 
-const verifyUser = async (req, res, next) => {
+const verifyUsers = async (req, res, next) => {
   try {
     const { email } = req.method === "GET" ? req.query : req.body;
     const exist = await User.findOne({ email });
@@ -25,6 +25,33 @@ const verifyUser = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(500).send({ msg: "Authentication error" });
+  }
+};
+
+const verifyUser = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ status: "Failed", msg: "Unauthorized" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  console.log("Token:", token);
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded Payload:", decoded);
+
+    // Access userId from the data field
+    const userId = decoded.data.userId;
+
+    req.user = await User.findById(userId);
+    if (!req.user) {
+      return res.status(404).json({ status: "Failed", msg: "User not found" });
+    }
+    next();
+  } catch (error) {
+    console.error("Token verification error:", error);
+    return res.status(401).json({ status: "Failed", msg: "Invalid Token" });
   }
 };
 
@@ -113,4 +140,4 @@ const userLoging = async (req, res) => {
   }
 };
 
-module.exports = { signup, userLoging, verifyUser };
+module.exports = { signup, userLoging, verifyUser, verifyUsers };

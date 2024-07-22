@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyUser } = require("../controller/authController");
+const { verifyUser, verifyUsers } = require("../controller/authController");
 const {
   saveList,
   getLists,

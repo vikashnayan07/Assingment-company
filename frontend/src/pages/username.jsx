@@ -3,7 +3,6 @@ import styles from "../styles/Username.module.css";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import { emailValidate } from "../helper/validate";
-
 import { authenticate } from "../helper/helper";
 import useAuthStore from "../store/centerStore";
 
@@ -20,16 +19,18 @@ export default function Username() {
     validateOnChange: false,
     onSubmit: async (values) => {
       try {
+        console.log(values);
         const response = await authenticate(values.email);
 
-        if (response.status === 200) {
-          setEmail(values.email);
-          navigate("/password");
-        } else {
+        if (response.error) {
           toast.error("User not found");
+        } else {
+          setEmail(values.email);
+          navigate("/password"); // Redirect to password route
         }
       } catch (error) {
-        toast.error("User not found");
+        console.error("Error:", error);
+        toast.error("Error during email validation");
       }
     },
   });

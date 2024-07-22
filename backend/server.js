@@ -5,12 +5,17 @@ require("dotenv").config();
 
 const authRoute = require("./route/authRoute");
 const listRoute = require("./route/listRoute");
-const proxyRoute = require("./route/proxyRoute"); // Add this line
+const proxyRoute = require("./route/proxyRoute");
 const connectMongoDb = require("./config/db");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Frontend URL
+  })
+);
+
 app.use(express.json());
 
 app.use("/api/auth", authRoute);

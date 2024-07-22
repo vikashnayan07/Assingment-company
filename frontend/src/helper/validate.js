@@ -6,16 +6,14 @@ export async function emailValidate(values) {
   if (values.email) {
     try {
       const response = await authenticate(values.email);
-      console.log(response);
-      if (response.status !== 200) {
-        errors.exist = toast.error("User not found..");
+      if (response.error) {
+        errors.exist = toast.error("User not found");
       }
     } catch (error) {
       console.error("Authentication error:", error);
       errors.exist = toast.error("Error during email validation");
     }
   }
-
   return errors;
 }
 

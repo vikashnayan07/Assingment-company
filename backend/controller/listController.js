@@ -13,6 +13,7 @@ const saveList = async (req, res) => {
     await newList.save();
     return res.status(201).json({ status: "Success", data: newList });
   } catch (error) {
+    console.error(error); // Log the error for debugging
     return res.status(500).json({ status: "Failed", msg: "Server Error" });
   }
 };

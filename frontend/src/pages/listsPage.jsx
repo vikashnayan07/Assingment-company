@@ -11,9 +11,10 @@ const ListsPage = () => {
   useEffect(() => {
     const fetchLists = async () => {
       try {
-        const response = await axios.get("/api/getLists", {
+        const response = await axios.get("/api/lists/getLists", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
+        console.log("Fetched Lists:", response.data.data);
         setLists(response.data.data);
       } catch (error) {
         toast.error("Failed to fetch lists");
@@ -24,7 +25,7 @@ const ListsPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/delete/${id}`, {
+      await axios.delete(`/api/lists/delete/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setLists(lists.filter((list) => list._id !== id));
@@ -35,7 +36,6 @@ const ListsPage = () => {
   };
 
   const handleEdit = (id) => {
-    // Redirect to a new page or open a modal to edit the list
     navigate(`/edit/${id}`);
   };
 
@@ -63,14 +63,28 @@ const ListsPage = () => {
                     Delete
                   </button>
                   <div className={styles.imageGrid}>
-                    {list.imageLinks.map((link, index) => (
-                      <img
-                        key={index}
-                        src={link}
-                        alt={`response code ${list.responseCodes[index]}`}
-                        className={styles.image}
-                      />
-                    ))}
+                    {list.imageLinks && list.imageLinks.length > 0 ? (
+                      list.imageLinks.map((link, index) => {
+                        console.log(
+                          "Rendering image:",
+                          link,
+                          "with response code:",
+                          list.responseCodes[index]
+                        );
+                        return (
+                          <img
+                            key={index}
+                            src={link}
+                            alt={`response code ${
+                              list.responseCodes[index] || "N/A"
+                            }`}
+                            className={styles.image}
+                          />
+                        );
+                      })
+                    ) : (
+                      <p>No images available</p>
+                    )}
                   </div>
                 </div>
               ))}

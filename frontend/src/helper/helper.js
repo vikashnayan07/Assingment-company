@@ -4,12 +4,16 @@ axios.defaults.baseURL = "http://localhost:3000";
 
 export async function authenticate(email) {
   try {
-    return await axios.post("/api/auth/authenticate", { email });
+    const response = await axios.post("/api/auth/authenticate", { email });
+    return response.data; // Return the response data
   } catch (error) {
-    return { error: "User not found" };
+    console.error(
+      "Authentication error:",
+      error.response ? error.response.data : error
+    );
+    return { error: "User not found" }; // Return a consistent error format
   }
 }
-
 export async function verifyPassword({ email, password }) {
   try {
     const response = await axios.post("/api/auth/login", { email, password });

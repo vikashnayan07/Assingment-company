@@ -4,7 +4,6 @@ import styles from "../styles/SearchPage.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-// List of valid HTTP status codes supported by http.dog
 const validStatusCodes = [
   100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300,
   301, 302, 303, 304, 305, 306, 307, 308, 400, 401, 402, 403, 404, 405, 406,
@@ -28,7 +27,7 @@ const SearchPage = () => {
     );
 
     if (matchedCodes.length === 0) {
-      setImages([{ code: 404, url: "https://http.dog/404.jpg" }]); // No match, show 404 image
+      setImages([{ code: 404, url: "https://http.dog/404.jpg" }]);
       return;
     }
 
@@ -43,7 +42,7 @@ const SearchPage = () => {
     } catch (error) {
       console.error("API Error:", error);
       toast.error("Failed to fetch images");
-      setImages([{ code: 404, url: "https://http.dog/404.jpg" }]); // Show 404 image if there's an error
+      setImages([{ code: 404, url: "https://http.dog/404.jpg" }]);
     }
   };
 

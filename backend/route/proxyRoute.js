@@ -2,7 +2,6 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 
-// List of valid HTTP status codes supported by http.dog
 const validStatusCodes = [
   100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300,
   301, 302, 303, 304, 305, 306, 307, 308, 400, 401, 402, 403, 404, 405, 406,
@@ -11,7 +10,6 @@ const validStatusCodes = [
   508, 510, 511,
 ];
 
-// Proxy route for handling requests to http.dog
 router.get("/proxy/http-dog/:code", async (req, res) => {
   const { code } = req.params;
   if (!validStatusCodes.includes(parseInt(code))) {

@@ -26,7 +26,7 @@ export default function Username() {
           toast.error("User not found");
         } else {
           setEmail(values.email);
-          navigate("/password"); // Redirect to password route
+          navigate("/password");
         }
       } catch (error) {
         console.error("Error:", error);

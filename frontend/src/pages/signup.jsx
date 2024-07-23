@@ -22,7 +22,7 @@ export default function Signup() {
       toast.promise(registerPromise, {
         loading: "Creating...",
         success: <b>Register successfully...</b>,
-        error: <b>Email is Already in use</b>, // Display specific error message
+        error: <b>Email is Already in use</b>,
       });
       registerPromise.then(() => {
         navigate("/");
@@ -69,7 +69,7 @@ export default function Signup() {
               <input
                 {...formik.getFieldProps("password")}
                 className={styles.textbox}
-                type="password" // Change type to password
+                type="password"
                 placeholder="Enter password"
               />
               <button className={styles.btn} type="submit">

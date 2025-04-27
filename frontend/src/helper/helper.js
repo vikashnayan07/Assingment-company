@@ -5,13 +5,13 @@ axios.defaults.baseURL = "http://localhost:3000";
 export async function authenticate(email) {
   try {
     const response = await axios.post("/api/auth/authenticate", { email });
-    return response.data; // Return the response data
+    return response.data;
   } catch (error) {
     console.error(
       "Authentication error:",
       error.response ? error.response.data : error
     );
-    return { error: "User not found" }; // Return a consistent error format
+    return { error: "User not found" };
   }
 }
 export async function verifyPassword({ email, password }) {
@@ -22,7 +22,6 @@ export async function verifyPassword({ email, password }) {
     console.log("Response data:", data);
 
     if (data.data && data.data.token) {
-      // Store the token in localStorage
       localStorage.setItem("token", data.data.token);
       return Promise.resolve({ data });
     } else {
@@ -45,12 +44,11 @@ export async function registerUser(credential) {
     }
   } catch (error) {
     if (error.response && error.response.status === 400) {
-      // Handle specific error
       return Promise.reject({
         error: error.response.data.msg || "Email is already in use",
       });
     }
-    // Handle general errors
+
     return Promise.reject({ error: error.message || "Registration error" });
   }
 }
